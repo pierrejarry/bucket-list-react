@@ -19,9 +19,34 @@ export const BucketListProvider = ({children}) => {
         });
     }
 
+    const changeStatus = async (item) => {
+        
+        await fetch(`http://localhost:3004/list/${item.id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                ...item,
+                checked: !item.checked
+            })
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            console.log(data);
+            setList(
+                list.map(i => i.id === item.id ? {
+                ...item, ...data
+                } : item)
+            );
+            
+        });
+    }
+
     return <BucketListContext.Provider value={{
         isLoading,
-        list
+        list,
+        changeStatus
     }}>
         {children}
     </BucketListContext.Provider>

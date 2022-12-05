@@ -78,13 +78,14 @@ ul {
 }
 
 .btn-label {
-    display: inline-flex;
     align-items: center;
+    background-color: $border;
+    border-radius: 10px;
+    display: inline-flex;
+    padding: 5px;
 
     &.checked {
         background-color: $green-bk;
-        border-radius: 10px;
-        padding: 5px;
     }
 
     svg {
