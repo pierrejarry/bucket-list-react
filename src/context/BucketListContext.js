@@ -5,6 +5,7 @@ const BucketListContext = createContext();
 export const BucketListProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [list, setList] = useState([]);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         fetchData()
@@ -19,8 +20,7 @@ export const BucketListProvider = ({children}) => {
         });
     }
 
-    const changeStatus = async (item) => {
-        
+    const changeStatus = async (item) => {        
         await fetch(`http://localhost:3004/list/${item.id}`, {
             method: 'PUT',
             headers: {
@@ -33,20 +33,42 @@ export const BucketListProvider = ({children}) => {
         })
         .then((response) => response.json())
         .then((data) => {
-            console.log(data);
             setList(
                 list.map(i => i.id === item.id ? {
-                ...item, ...data
-                } : item)
+                ...i, ...data
+                } : i)
             );
-            
         });
+    }
+
+    const toggleModal = () => {
+        setShowModal(!showModal);
+    }
+
+    const addNewItem = async (item) => {
+        await fetch(`http://localhost:3004/list/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(item)
+        })
+        .then((response) => response.json())
+        .then((data) => {
+            setList([...list, data]
+            );
+            setShowModal(false);
+        });
+
     }
 
     return <BucketListContext.Provider value={{
         isLoading,
         list,
-        changeStatus
+        showModal,
+        changeStatus,
+        toggleModal,
+        addNewItem
     }}>
         {children}
     </BucketListContext.Provider>

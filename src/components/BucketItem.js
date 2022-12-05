@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import BucketListContext from '../context/BucketListContext';
 
 function BucketItem({item}) {
-  const {changeStatus} = useContext(BucketListContext)
+  const {changeStatus} = useContext(BucketListContext);
   const btnLabel = item.checked ? 'Done' : 'Mark as Done'; 
   
   const toggleStatus = (id, checked) => {
