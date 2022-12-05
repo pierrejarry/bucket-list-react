@@ -1,9 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap');
 
+$base-color: #222;
+$primary-color: #f8c291;
+
 /* General */
 
 body {
-    color: #222;
+    color: $base-color;
     font: 16px 'Montserrat', sans-serif;
     margin: 0;
     padding: 0;
@@ -13,8 +16,52 @@ h1 {
     margin: 0;
 }
 
+.btn {
+    background-color: $base-color;
+    border: 1px solid $base-color;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    padding: 10px 20px;
+    transition: .5s all;
+
+    &:hover,
+    &.secondary {
+        background-color: white;
+        color: $base-color;
+    }
+
+    &.secondary {
+        &:hover {
+            background-color: $base-color;
+            color: white;
+        }
+    }
+
+    
+}
+
 /* Header */
 
 header {
+    background-color: $primary-color;
+    color: white;
+    display: flex;
+    justify-content: space-between;
     padding: 10px;
+
+    .btn.secondary {
+        border-color: $primary-color;
+
+        &:hover {
+            background-color: white;
+            color: $primary-color;
+        }
+    }
+}
+
+/* Main */
+
+main {
+    padding: 10px
 }
