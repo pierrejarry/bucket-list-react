@@ -5,13 +5,9 @@ import { useContext } from 'react';
 import BucketListContext from '../context/BucketListContext';
 
 function BucketItem({item}) {
-  const {changeStatus} = useContext(BucketListContext);
+  const {changeStatus, removeItem} = useContext(BucketListContext);
   const btnLabel = item.checked ? 'Done' : 'Mark as Done'; 
   
-  const toggleStatus = (id, checked) => {
-    changeStatus(id, checked);
-  }
-
   return (
     <li className={item.checked ? 'checked' : ''}>
       <div className="info">
@@ -19,12 +15,12 @@ function BucketItem({item}) {
         <span className="cat">{item.category}</span>
       </div>
       <div className="action">
-        <button type="button" onClick={() => {toggleStatus(item)}} className={`btn-label ${item.checked ? 'checked' : ''}`}>
+        <button type="button" onClick={() => {changeStatus(item)}} className={`btn-label ${item.checked ? 'checked' : ''}`}>
             {btnLabel}
             <MdCheck/>
         </button>
         <button type="button">
-            <MdClose className="close"/>
+            <MdClose onClick={() => {removeItem(item.id)}} className="close"/>
         </button>
       </div>
     </li>

@@ -59,7 +59,15 @@ export const BucketListProvider = ({children}) => {
             );
             setShowModal(false);
         });
+    }
 
+    const removeItem = async (id) => {  
+        await fetch(`http://localhost:3004/list/${id}`, {
+            method: 'DELETE'
+        })
+        .then(() => {
+            setList(list.filter( item => item.id !== id))
+        });
     }
 
     return <BucketListContext.Provider value={{
@@ -68,7 +76,8 @@ export const BucketListProvider = ({children}) => {
         showModal,
         changeStatus,
         toggleModal,
-        addNewItem
+        addNewItem,
+        removeItem
     }}>
         {children}
     </BucketListContext.Provider>
