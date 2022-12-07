@@ -48,6 +48,7 @@ function Form() {
             <option value='growth'>Personal Growth</option>
             <option value='sentimental'>Sentimental Life</option>
             <option value='travel'>Travel</option>
+            <option value='travel'>Sport</option>
         </select>
         <button type='submit' className='btn'>Add it!</button>
     </form>

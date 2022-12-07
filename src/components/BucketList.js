@@ -1,24 +1,27 @@
 import { useContext } from 'react';
 import BucketListContext from '../context/BucketListContext';
 import BucketItem from './BucketItem';
+import { MdClose } from "react-icons/md";
+
 
 function BucketList() {
   const title = 'Here is your bucket list:'
-  const {isLoading, list} = useContext(BucketListContext)
+  const {hasFilter, selectedFilter, isLoading, filteredList, removeFilter} = useContext(BucketListContext)
 
-  const bucketList = list.map( item => 
+  const bucketList = filteredList.map( item => 
     <BucketItem key={item.id} item={item} />
   );
 
-  if (!isLoading && (!list || list.length === 0)) {
+  if (!isLoading && (!filteredList || filteredList.length === 0)) {
     return <p>No item yet.</p>
   }
-
+  
   return isLoading ? (
     <p>Loading...</p>
    ) : (
     <>
         <h2>{title}</h2>
+        {hasFilter && <p>Filers applied: <span className='selected-filter'>{selectedFilter}<MdClose onClick={removeFilter}/></span></p>}
         <ul>
         {bucketList}
         </ul>

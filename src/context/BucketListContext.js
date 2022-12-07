@@ -5,7 +5,10 @@ const BucketListContext = createContext();
 export const BucketListProvider = ({children}) => {
     const [isLoading, setIsLoading] = useState(true);
     const [list, setList] = useState([]);
+    const [filteredList, setFilteredList] = useState([]);
     const [showModal, setShowModal] = useState(false);
+    const [hasFilter, setHasFilter] = useState(false);
+    const [selectedFilter, setSelectedFilter] = useState(null);
 
     useEffect(() => {
         fetchData()
@@ -16,6 +19,7 @@ export const BucketListProvider = ({children}) => {
         .then((response) => response.json())
         .then((data) => {
             setList(data);
+            setFilteredList(data);
             setIsLoading(false);
         });
     }
@@ -70,14 +74,31 @@ export const BucketListProvider = ({children}) => {
         });
     }
 
+    const showOnlyCategory = (cat) => {
+        setFilteredList(filteredList.filter(item => item.category === cat))
+        setHasFilter(true);
+        setSelectedFilter(cat);
+    }
+
+    const removeFilter = () => {
+        setHasFilter(false);
+        setSelectedFilter(null);
+        setFilteredList(list);
+    }
+
     return <BucketListContext.Provider value={{
         isLoading,
         list,
+        filteredList,
         showModal,
+        hasFilter,
+        selectedFilter,
         changeStatus,
         toggleModal,
         addNewItem,
-        removeItem
+        removeItem,
+        showOnlyCategory,
+        removeFilter
     }}>
         {children}
     </BucketListContext.Provider>
